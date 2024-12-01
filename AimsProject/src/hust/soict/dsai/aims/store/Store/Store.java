@@ -1,45 +1,75 @@
 package hust.soict.dsai.aims.store.Store;
 
 import java.util.ArrayList;
-
-import hust.soict.dsai.aims.disc.DigitalVideoDisc.DigitalVideoDisc;
+import java.util.List;
+import hust.soict.dsai.aims.media.Media;
 
 public class Store {
-    // Attribute: List of DVDs available in the store
-    private ArrayList<DigitalVideoDisc> itemsInStore = new ArrayList<>();
+    private List<Media> itemsInStore = new ArrayList<Media>();
 
-    // Method to add a DVD to the store
-    public void addDVD(DigitalVideoDisc dvd) {
-        itemsInStore.add(dvd);
-        System.out.println("DVD added to store: " + dvd.toString());
+    public Store() {
     }
 
-    // Method to remove a DVD from the store by ID
-    public void removeDVD(int id) {
-        boolean found = false;
-        for (int i = 0; i < itemsInStore.size(); i++) {
-            if (itemsInStore.get(i).getId() == id) {
-                System.out.println("DVD removed from store: " + itemsInStore.get(i).toString());
-                itemsInStore.remove(i);
-                found = true;
-                break;
+    //Them 1 item vao List
+    public void addItem(Media item) {
+        // Item = rỗng thì không thể thêm
+        if (item == null) {
+            System.out.println("Add to store fail");
+            return;
+        }
+        // Item tồn tại trong Store thì cũng không thể thêm
+        if (itemsInStore.contains(item)) {
+            System.out.println("Item is already in store!!!");
+            return;
+        }
+
+        // không trong 2 TH trên thì có thể thêm
+        itemsInStore.add(item);
+        System.out.println("New Item added to store");
+    }
+
+    //Thêm nhiều item vào store
+    public void addItem(Media... medias) {
+        //Kiêm tra trùng và thêm từng item vào List
+        for (Media media : medias) {
+            if (itemsInStore.contains(media)) {
+                System.out.println("Item is already in store!!!");
+                continue;
             }
-        }
-        if (!found) {
-            System.out.println("No match found for ID: " + id);
+            itemsInStore.add(media);
+            System.out.println("New Item added to store");
         }
     }
 
-    // Method to display all DVDs in the store
+    //Xoá item
+    public void removeItem(Media item) {
+        //Kiểm tra tồn tại hay không
+        if (!itemsInStore.contains(item)) {
+            System.out.println("This Item is not in store!!!");
+            return;
+        }
+        itemsInStore.remove(item);
+        System.out.println("Item removed from store");
+    }
+
     public void printStore() {
-        System.out.println("***********************STORE***********************");
-        if (itemsInStore.isEmpty()) {
-            System.out.println("No DVDs in the store.");
-        } else {
-            for (int i = 0; i < itemsInStore.size(); i++) {
-                System.out.println((i + 1) + ". " + itemsInStore.get(i).toString());
+        System.out.println("\n******************* STORE *******************\n");
+        System.out.println("Store Items: ");
+        for (Media item : itemsInStore) {
+            System.out.println(item.toString());
+        }
+        System.out.println("                   ~ END ~");
+    }
+
+    public Media searchByTitle(String title) {
+        for (int i = 0; i < itemsInStore.size(); i++) {
+            if (itemsInStore.get(i).getTitle().equals(title)) {
+                System.out.println(itemsInStore.get(i).toString());
+                return itemsInStore.get(i);
             }
         }
-        System.out.println("***************************************************");
+        System.out.println("No match found!");
+        return null;
     }
 }
+
