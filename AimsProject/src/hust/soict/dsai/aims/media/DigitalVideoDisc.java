@@ -1,27 +1,59 @@
 package hust.soict.dsai.aims.media;
 
-public class DigitalVideoDisc extends Disc implements Playable{  
+public class DigitalVideoDisc extends Disc{   
     private String director;
+    private float length;
 
-    public DigitalVideoDisc(float length, String director, String director2) {
-        super(length, director);
-        director = director2;
+    private static int nbDigitalVideoDiscs = 0;
+
+    public DigitalVideoDisc() {
+        super(); 
+        this.director = "";
+        this.length = 0;
+        this.id = ++nbDigitalVideoDiscs;
+
     }
 
-    public DigitalVideoDisc(String title, float length, String director, String director2) {
-        super(title, length, director);
-        director = director2;
+    public DigitalVideoDisc(String title) {
+        this.title = title;
+        this.id = ++nbDigitalVideoDiscs;
     }
 
-    public DigitalVideoDisc(String title, String director2, float length, String director, float cost) {
-        super(title, cost, length, director);
-        director = director2;
+    public DigitalVideoDisc(String title, String category) {
+        this.title = title;
+        this.category = category;
+        this.id = ++nbDigitalVideoDiscs;
     }
 
-    public DigitalVideoDisc(String title, String category, float cost, float length, String director,
-            String director2) {
-        super(title, category, cost, length, director);
-        director = director2;
+    public DigitalVideoDisc(String title, String category, float cost) {
+        super();
+        this.title = title;
+        this.category = category;
+        this.cost = cost;
+        this.id = ++nbDigitalVideoDiscs;
+    }
+
+    public DigitalVideoDisc(String title, String category,
+            String director, float length, float cost) {
+        super();
+        this.title = title;
+        this.category = category;
+        this.cost = cost;
+        this.length = length;
+        this.director = director;
+        this.id = ++nbDigitalVideoDiscs;
+    }
+    public void play() throws PlayerException
+    {
+        if(this.getLength()>0)
+        {  
+        System.out.println("Playing DVD: " + this.getTitle());
+        System.out.println("DVD length: " + this.getLength());
+        }
+        else
+        {
+            throw new PlayerException("ERROR: DVD length is non-positive!");
+        }
     }
 
     public String getTitle() {
@@ -49,17 +81,11 @@ public class DigitalVideoDisc extends Disc implements Playable{
     }
 
     public String toString() {
-        return "DVD(" + this.id + "): " + this.title + " - " + this.category + " - " + this.director + " - "
-                + this.length + " - " + this.cost + "$";
+        return id + ". " + title + " - " + category + " - " + director + " - " + length + " : " + Math.round(cost*100.0)/100.0 + " $ ";
     }
 
     public void setTitle(String title){
         this.title = title;
     }
-
-	@Override
-	public void play() {
-        System.out.println("Playing DVD: " + this.getTitle());
-       System.out.println("DVD Length: " + this.getLength());
-    }
 }
+

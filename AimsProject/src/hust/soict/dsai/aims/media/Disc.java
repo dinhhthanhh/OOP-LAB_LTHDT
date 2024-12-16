@@ -1,45 +1,54 @@
 package hust.soict.dsai.aims.media;
 
-public class Disc extends Media {
-    protected float length;
-    protected String director;
+public class Disc extends media {
+    private int length;
+    private String director;
 
-    // Getter and setter
-    public float getLength() {
-        return length;
+    // CONSTRUCTORS
+    public Disc() {
+        super();
+    }
+
+    public Disc(String title) {
+        super(title);
+    }
+
+    public Disc(String title, float cost) {
+        super(title, cost);
+    }
+
+    public Disc(String title, String category, float cost) {
+        super(title, category, cost);
+    }
+
+    public Disc(String title, String category, float cost, String director) {
+        super(title, category, cost);
+        this.director = director;
+    }
+
+    public Disc(String title, String category, float cost, String director, int length) {
+        this(title, category, cost, director);
+        this.length = length;
+    }
+
+    // SETTER AND GETTER
+    @Override
+    public void setTitle(String title) {
+        // TODO Auto-generated method stub
+        super.setTitle(title);
+    }
+
+    public void setDirector(String director) {
+        this.director = director;
     }
 
     public String getDirector() {
         return director;
     }
 
-    // Construtors
-    public Disc(float length, String director) {
-        this.length = length;
-        this.director = director;
+    @Override
+    public String getTitle() {
+        // TODO Auto-generated method stub
+        return super.getTitle();
     }
-
-    public Disc(String title, float length, String director) {
-        super(title);
-        this.length = length;
-        this.director = director;
-    }
-
-    public Disc(String title, float cost, float length, String director) {
-        super(title, cost);
-        this.length = length;
-        this.director = director;
-    }
-
-    public Disc(String title, String category, float cost, float length, String director) {
-        super(title, category, cost);
-        this.length = length;
-        this.director = director;
-    }
-
-	public void play() {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
